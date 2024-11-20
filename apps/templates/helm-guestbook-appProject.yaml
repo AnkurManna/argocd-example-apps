@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: ankur-project
+  namespace: argocd
+spec:
+  description: Project for the helm-guestbook application
+  sourceRepos:
+    # Allow the repository specified in the Application
+    - {{ .Values.spec.source.repoURL }}
+  destinations:
+    # Allow deployments only to the specified cluster and namespace
+    - namespace: '*'
+      server: {{ .Values.spec.destination.server }}
+  clusterResourceWhitelist:
+    # Allow managing these types of cluster-wide resources
+    - group: '*'
+      kind: '*'
+  namespaceResourceBlacklist: []
+    
